@@ -3,10 +3,37 @@ from matrix import *
 from math import *
 
 def add_polygon( points, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
-    pass
+    add_point(points, x0, y0, z0)
+    add_point(points, x1, y1, z1)
+    add_point(points, x2, y2, z2)
 
 def draw_polygons( points, screen, color ):
-    pass
+    if len(points) < 3:
+        print 'Need at least 3 points to draw'
+        return
+    point = 0
+    while  point < len(points) - 1:
+        ax = points[point+1][0] - points[point][0]
+        ay = points[point+1][1] - points[point][1]
+        bx = points[point+2][0] - points[point][0]
+        by = points[point+2][1] - points[point][1]
+        if (ax * by - ay * bx) > 0:
+            draw_line(  int(points[point][0]),
+                        int(points[point][1]),
+                        int(points[point+1][0]),
+                        int(points[point+1][1]),
+                        screen, color)
+            draw_line(  int(points[point+1][0]),
+                        int(points[point+1][1]),
+                        int(points[point+2][0]),
+                        int(points[point+2][1]),
+                        screen, color)
+            draw_line(  int(points[point+2][0]),
+                        int(points[point+2][1]),
+                        int(points[point][0]),
+                        int(points[point][1]),
+                        screen, color)
+        point += 3
 
 def add_box( points, x, y, z, width, height, depth ):
     x1 = x + width
@@ -151,7 +178,7 @@ def draw_lines( matrix, screen, color ):
                    int(matrix[point][1]),
                    int(matrix[point+1][0]),
                    int(matrix[point+1][1]),
-                   screen, color)    
+                   screen, color)
         point+= 2
 
 def add_edge( matrix, x0, y0, z0, x1, y1, z1 ):
@@ -182,7 +209,7 @@ def draw_line( x0, y0, x1, y1, screen, color ):
     if ( abs(x1-x0) >= abs(y1 - y0) ):
 
         #octant 1
-        if A > 0:            
+        if A > 0:
             d = A + B/2
 
             while x < x1:

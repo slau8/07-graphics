@@ -73,9 +73,9 @@ def add_sphere( edges, cx, cy, cz, r, step ):
     longt_start = 0
     longt_stop = step
 
-    step+= 1
+    step += 1
     for lat in range(lat_start, lat_stop):
-        for longt in range(longt_start, longt_stop+1):
+        for longt in range(longt_start, longt_stop):
             index = lat * step + longt
             next = (lat+1) * (step) + longt
             if (lat >= lat_stop - 1):
@@ -154,6 +154,7 @@ def generate_torus( cx, cy, cz, r0, r1, step ):
 
             points.append([x, y, z])
     return points
+
 
 def add_circle( points, cx, cy, cz, r, step ):
     x0 = r + cx
